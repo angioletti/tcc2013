@@ -1,0 +1,8 @@
+- organizar imagens da base toyama
+- codificar PSNR
+- codificar MSE
+- codificar estrutura do objeto a ser utilizado
+- estudar picle
+- estudar shelve
+- estudar OOP
+- codificar MSSIM
