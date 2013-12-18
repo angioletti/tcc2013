@@ -1,3 +1,15 @@
+*.blg
+*.brf
+*.lof
+*.lot
+*.ps
+*.toc
+*.bbl
+*.dvi
+*.idx
+*.bak
+*.tex~
+*.sty~
 *.aux
 *.log
 *.pdf
