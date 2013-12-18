@@ -10,17 +10,17 @@ Para o cumprimento desse trabalho, escolhemos duas bases de imagens diferentes, 
 
 A base Toyama é, na verdade, chamada \textbf{IRCCyN/IVC-Toyama database (LCD)} e tem acesso franqueado no site ~\cite{Tourancheau2008} do IRCCyN (\emph{Institut de Recherche en Communications et Cybernétique de Nantes}), da Universidade de Nantes, na França.
 
-A base LIVE é, na verdade, chamada \textbf{LIVE Image Quality Assessment Database} e tem acesso também franqueado no site ~\cite{livedb} do LIVE (\emph{Laboratory for Image \& Video Engineering}).
+A base LIVE é, na verdade, chamada \textbf{LIVE Image Quality Assessment Database} e tem acesso também franqueado no site ~\cite{livedb} do LIVE (\emph{Laboratory for Image \& Video Engineering}). Utilizamos sua \emph{release 1} nesse trabalho, por ser a única que disponibilizava dados de avaliação subjetiva para compressão JPEG.
 
-Ambas as bases possuem imagens originais (não degradadas) e um determinado número de imagens degradadas com diferentes tipos e graus de degradação; nosso trabalho se concentra na degradação do tipo JPEG, em todos os graus de degradação apresentados. A Tabela \ref{tab:bds} apresenta as principais características de ambas as bases.
+Ambas as bases possuem imagens originais (não degradadas) e um determinado número de imagens degradadas com diferentes tipos e graus de degradação; nosso trabalho se concentra na degradação do tipo JPEG, em todos os graus de degradação disponíveis nas bases. A Tabela \ref{tab:bds} apresenta as principais características de ambas as bases. 
 
 \begin{table}[htb]
 	\footnotesize
 	\caption[Características das Imagens das Bases de Dados]{Características das Imagens das Bases de Dados}
 	\label{tab:bds}
+	\centering
  	\begin{tabular}{ l | c | c } %\toprule[1.5pt]
 % \begin{minipage}{\linewidth}
-% \centering
 % 	\captionof{table}{Características das Imagens nas Bases de Dados} \label{tab:bds}
 % 	\begin{tabular}{ l | c | c } %\toprule[1.5pt]
 							&	\textbf{Toyama}			&	\textbf{LIVE} 		\\\hline % \midrule
@@ -42,40 +42,71 @@ Ambas as bases possuem imagens originais (não degradadas) e um determinado núm
 	\legend{Fontes: \cite{livedb,Tourancheau2008}}
 \end{table}
 
-As figuras \autoref{fig:liveref} e \autoref{fig:livedist} apresentam exemplos de figuras disponíveis na base LIVE; já as figuras \autoref{fig:toyaref} e \autoref{toyadist} provém da base Toyama. As imagens à esquerda são imagens de referência, não-corrompidas, enquanto as da direita já passaram pela compressão JPEG.
+As \autoref{fig:liveref} e \autoref{fig:livedist} apresentam exemplos de figuras disponíveis na base LIVE; já as figuras \autoref{fig:toyaref} e \autoref{fig:toyadist} provém da base Toyama. As imagens à esquerda são imagens de referência, não-corrompidas, enquanto as da direita já passaram pela compressão JPEG.
 
 \begin{figure}[htb]
  \label{fig:liveex}
  \centering
-  \begin{minipage}{0.45\textwidth}
+  \begin{minipage}{0.48\textwidth}
     \centering
     \caption{Imagem de referência LIVE} \label{fig:liveref}
-    \includegraphics[scale=0.80]{../img/liveref66.pdf}
+    \includegraphics[width=\textwidth]{../img/liveref66.pdf}
     \legend{Fonte: \cite{livedb}}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.45\textwidth}
+  \begin{minipage}{0.48\textwidth}
     \centering
     \caption{Imagem distorcida LIVE} \label{fig:livedist}
-    \includegraphics[scale=0.80]{../img/liveref90.pdf}
+    \includegraphics[width=\textwidth]{../img/liveref90.pdf}
     \legend{Fonte: \cite{livedb}}
   \end{minipage}
+\end{figure}
+
+Segundo a LIVE, o estudo que gerou as bases conduziu duas sessões de avaliação distintas. Os pesquisadores tiveram o cuidado de apresentar, em ambas as sessões, todas as imagens de referência e suas respectivas distorções. A quantidade de sujeitos no experimento foi diferente em cada sessão: na primeira, houve vinte sujeitos, na segunda, apenas treze. Os pesquisadores afirmam que a escolha das imagens para o estudo foi tal que possibilitaria uma distribuição aproximadamente uniforme das notas de avaliação, o que pode ser visualizado no histograma da \autoref{graf:liveHist}. Não foi imposta restrição de distância de visualização para a avaliação e as imagens foram mostradas aos sujeitos aleatoriamente. Para emitir suas opiniões, os sujeitos poderiam levar o tempo que necessitassem, mas só poderiam visualizar cada imagem apenas uma vez. Os pesquisadores promoveram uma pequena sessão de treinamento antes do início de cada sessão de avaliação. Estas informações e maiores detalhes podem ser obtidos no \emph{site} da referida base.
+
+\begin{figure}[htb]
+%	\label{graf:liveHist}
+	\centering
+	\begin{minipage}{.8\textwidth}
+		\centering
+		\caption{Histograma de avaliação subjetiva  --- LIVE}\label{graf:liveHist}
+		\includegraphics{../../graphs/L_Hist_OSs.pdf}
+		\legend{Histograma gerado a partir das opiniões dos sujeitos sobre a totalidade das imagens da base}
+	\end{minipage}
 \end{figure}
 
 \begin{figure}[htb]
  \label{fig:toyaex}
  \centering
-  \begin{minipage}{0.45\textwidth}
+  \begin{minipage}{0.48\textwidth}
     \centering
     \caption{Imagem de referência Toyama} \label{fig:toyaref}
-    \includegraphics[scale=0.33]{../img/toyaref07.pdf}
+    \includegraphics[width=\textwidth]{../img/toyaref07.pdf}
     \legend{Fonte: \cite{Tourancheau2008}}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.45\textwidth}
+  \begin{minipage}{0.48\textwidth}
     \centering
     \caption{Imagem distorcida Toyama} \label{fig:toyadist}
-    \includegraphics[scale=0.80]{../img/toyadist07_79.pdf}
+    \includegraphics[width=\textwidth]{../img/toyadist07_79.pdf}
     \legend{Fonte: \cite{Tourancheau2008}}
   \end{minipage}
 \end{figure}
+
+Segundo o arquivo de informações que acompanha a base Toyama, foram dezesseis não-peritos que avaliaram as imagens dessa base, em sua maioria estudantes, não informando se houve ou não sessões distintas. Da mesma forma que a LIVE, as imagens foram apresentadas aleatoriamente, sem restrição de tempo e também com apenas uma oportunidade de avaliação para cada imagem. Neste estudo foi imposta a distância de observação igual a quatro vezes a altura da imagem. A Toyama apresenta dezesseis avaliações distintas para cada imagem, totalizando, portanto, dezesseis sujeitos no experimento. O histograma das notas de avaliação das imagens dessa base pode ser observado na \autoref{graf:toyaHist}.
+ 
+
+\begin{figure}[htb]
+%	\label{graf:liveHist}
+	\centering
+	\begin{minipage}{.8\textwidth}
+		\centering
+		\caption{Histograma de avaliação subjetiva --- Toyama}\label{graf:toyaHist}
+		\includegraphics{../../graphs/T_Hist_OSs.pdf}
+		\legend{Histograma gerado a partir das opiniões dos sujeitos sobre a totalidade das imagens da base}
+	\end{minipage}
+\end{figure}
+
+Ambas os grupos de pesquisa deram a seus sujeitos uma escala com as palavras ``\emph{bad}'', ``\emph{poor}'', ``\emph{fair}'', ``\emph{good}'' e ``\emph{excellent}'', mas cada uma associou a essas palavras uma escala diferente. Além de os intervalos de avaliação serem distintos, como pode ser observado na \autoref{tab:bds}, outra diferença se faz digna de nota: a LIVE considera contínuo e linear o domínio de avaliação, enquanto a Toyama considera esse domínio discreto. Ou seja, na LIVE encontraremos notas como $4,55$, ou $9,42$ e na Toyama, apenas os inteiros entre $[1,5]$.
+
+\section{Avaliação de Qualidade de Imagens}
