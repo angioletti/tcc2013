@@ -1,10 +1,35 @@
-\documentclass[a4paper]{book}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage[brazil]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{fullpage}
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	twoside,			% para impressão em verso e anverso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+%	french,				% idioma adicional para hifenização
+%	spanish,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	]{abntex2}
+
+% O documento abaixo tem que vir antes do \usepackage{tcc} para poder aproveitar os valores
+% informados nas macros dentro de capa_e_folhaRosto
+
+\usepackage{tcc}
+\input{capa_e_folhaRosto}
+\input{pdfsetup}
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+
+
 %
 %
 % DICAS GERAIS:
@@ -18,7 +43,46 @@
 %
 %
 \begin{document}
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
 
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+%\include{ficha_catalografica}
+%\include{errata}
+%\include{folhaAprovacao}
+%\include{dedicatoria}
+%\include{agradecimentos}
+%\include{epigrafe}
+%\include{resumos}
+%\include{ilustracoes}
+%\include{tabelas}
+%\include{abrevSiglas}
+%\include{simbolos}
+%\include{sumario}
+
+\textual
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
 \include{intro} % Introdução
 % Qual o problema a ser resolvido pelo trabalho?
 % Por que ele é importante (contexto)?
@@ -28,6 +92,11 @@
 % Guia de leitura do TCC. Apresenta a lógica do TCC e indica o que vai ser encontrado em cada capítulo. É importante que o leitor saiba o que vai
 % encontrar no TCC.
 %
+
+% ----------------------------------------------------------
+% PARTE - preparação da pesquisa
+	% ----------------------------------------------------------
+\part{Preparação da pesquisa}
 
 \include{cap01} % Considerações Iniciais
 
@@ -39,7 +108,11 @@
 %  Conclusão
 %
 
-\include{cap02} % Análise Comparativa
+% ----------------------------------------------------------
+% Parte do Procedimento Experimental
+% ----------------------------------------------------------
+\part{Procedimento Experimental}
+%\include{cap02} % Análise Comparativa
 
 % Este é um capítudo de revisão de literatura
 % Sub-dividido em:
@@ -62,7 +135,7 @@
 % Este capítulo deve ser finalizado com a indicação da contribuição do trabalho e indicar o diferencial em relação as abordadas no capítulo. Maiores detalhes sobre a
 % proposta do trabalho serão apresentados no próximo capítulo.
 
-\include{cap03} 
+%\include{cap03} 
 
 % Esse capítulo aborda a contribuição do trabalho. Se houver necessidade, pode-se incluir uma seção para se destacar 'uma teoria nova' (ou não citada no capítulo anterior)
 % e que seja importante para o entendimento da contribuição.
@@ -72,7 +145,12 @@
 %  Desenvolvimento
 %  Conclusão 
 
-% \chapter{Descrição do Cenário ou ambiente usado para a obtenção dos resultados. E resultados.}
+% ----------------------------------------------------------
+% Resultados
+% ----------------------------------------------------------
+\part{Resultados}
+
+%\include{cap04}
 
 % Aborda todos os procedimentos utilizados para a obtenção dos resultados.
 % Se o trabalho for uma simulação, apresentar o cenário de simulação utilizado.
@@ -89,8 +167,20 @@
 %  Desenvolvimento
 %  Conclusão 
 %  
-\include{cap04}
-\include{concl}
+
+% ---
+% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
+% ---
+\bookmarksetup{startatroot}% 
+% ---
+
+% ---
+% Conclusão
+% ---
+% \chapter*[Conclusão]{Conclusão}
+% \addcontentsline{toc}{chapter}{Conclusão}
+% 
+% \include{concl}
 
 % Revisão do trabalho desenvolvido
 %   Objetivos do trabalho, conclusões relevantes
@@ -107,7 +197,46 @@
 % Referências Bibliográficas: em se tratando de Ref. Bib., todas devem estar citadas no texto e listadas de acordo com a ordem de citação! Comumente adota-se o padrão de citação
 % de artigos como os do IEEE
 
-\include{refer}
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{references}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+%\include{apendices}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+%\include{anexos}
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\printindex
 
 \end{document}
-
