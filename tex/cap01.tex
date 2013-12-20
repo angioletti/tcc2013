@@ -4,7 +4,7 @@ Para que possamos fazer uma análise comparativa entre duas estratégias estatí
 
 Assim, este capítulo será dividido em duas grandes seções, uma destinada à apresentação das bases de imagens utilizadas, outra destinada à discussão sobre as qualidades dos dados nessas bases.
 
-\section{As bases de dados}
+\section{As bases de dados}\label{sec:imdb}
 
 Para o cumprimento desse trabalho, escolhemos duas bases de imagens diferentes, que chamaremos simplesmente Toyama e LIVE.
 
@@ -107,6 +107,48 @@ Segundo o arquivo de informações que acompanha a base Toyama, foram dezesseis 
 	\end{minipage}
 \end{figure}
 
-Ambas os grupos de pesquisa deram a seus sujeitos uma escala com as palavras ``\emph{bad}'', ``\emph{poor}'', ``\emph{fair}'', ``\emph{good}'' e ``\emph{excellent}'', mas cada uma associou a essas palavras uma escala diferente. Além de os intervalos de avaliação serem distintos, como pode ser observado na \autoref{tab:bds}, outra diferença se faz digna de nota: a LIVE considera contínuo e linear o domínio de avaliação, enquanto a Toyama considera esse domínio discreto. Ou seja, na LIVE encontraremos notas como $4,55$, ou $9,42$ e na Toyama, apenas os inteiros entre $[1,5]$.
+Ambas os grupos de pesquisa deram a seus sujeitos uma escala com as palavras ``\emph{bad}'', ``\emph{poor}'', ``\emph{fair}'', ``\emph{good}'' e ``\emph{excellent}'', mas cada uma associou a essas palavras uma escala diferente. Além de os intervalos de avaliação serem distintos, como pode ser observado na \autoref{tab:bds}, outra diferença se faz digna de nota: a LIVE considera contínuo e linear o domínio de avaliação, enquanto a Toyama considera esse domínio discreto. Ou seja, na LIVE encontraremos notas como $4,55$, ou $9,42$ e na Toyama, apenas os inteiros entre $[1,5]$. A Toyama ainda informa que seus testes foram executados conforme as condições de avaliação apontadas no ITU-R Rec. 500-10. Veremos mais detalhes sobre essa recomendação, e outras, na sessão seguinte.
 
 \section{Avaliação de Qualidade de Imagens}
+
+Como dito no \autoref{chap:intro}, os atuais usos de imagens e vídeos digitais têm sua abrangência amplificada, na medida em que novos serviços surgem no mercado --- e que mais usuários utilizam esses serviços. Isso, como dito, se torna um desafio pra indústria, que precisa encontrar formas cada vez mais econômicas e eficientes de entregar seus produtos (mídias digitais) utilizando a infra-estrutura de comunicação existente e com o mínimo custo computacional e de armazenamento.
+
+Para resolver problemas de armazenamento e tráfego, algoritmos de compressão foram desenvolvidos e são utilizados corriqueiramente. Padrões como o JPEG e MPEG são muito frequentemente utilizados por pessoas que desejam assistir vídeos online ou trasmitir fotos pelo celular. Alguns dos algoritmos utilizados hoje em dia são classificados como ``sem perdas'' (PNG e TIFF são alguns exemplos), o que significa que, uma vez descompactas, as imagens resultantes guardam as mesmas características das images originais --- o mesmo volume de dados dentro da mesma conformação espacial. Outros algoritmos, que consideram a perda de informação como razoável, são considerados ``com perdas'', e atingem taxas de compressão mais elevadas. Exemplos de algoritmos com perdas são os já citados JPG (imagem) e MPEG (vídeo).
+
+Estabelece-se então uma relação de compromisso entre compactação (com perda de informação) e qualidade, já que é mais interessante para a indústria assumir um percentual de perda em benefício de economia de espaço e banda de tráfego. Contudo, junto com a perda de informação caminha a perda de qualidade. 
+
+Qual o mínimo de informação para que, aferindo economia, mantenha-se a mesma qualidade percebida no produto final? Nesse contexto se situa o campo de pesquisa em qualidade de imagem. E como aferir essa qualidade? Atualmente, encontra-se duas formas distintas e dependentes: o método subjetivo de aferição de qualidade e o objetivo.
+
+O método subjetivo ainda é o mais confiável, pois se basea na aferição a partir de observadores humanos. À pessoas são apresentadas imagens, cujas qualidades são eferidas e anotadas. Afinal, nada melhor do que o próprio cliente aferindo a qualidade do produto entregue. Essa abordagem, contudo tem algumas restrições.
+
+A primeira grande restrição é a econômica. Para que a aferição seja feita por seres humanos é necessário que esses sujeitos sejam contratados, ou que se aloque recursos para que o material chegue até pessoas dispostas a fazer essa aferição gratuitamente. O segundo grande custo é o tempo: aferições humanas dependem de logística e tempo de processamento dos dados obtidos.
+
+Para que se tenha uma opinião considerada estatisticamente relevante para uma população, é necessário um grande número de sessões de avaliação, com uma gama de indivíduos bastante diversa --- idealmente diversa a ponto de representar uniformemente todas as variâncias da população em questão. Essa consideração reforça as restrições de tempo e de custo financeiro. Esse tipo de avaliação é raramente executada com indivíduos ou imagens suficientes para que se possa fazer inferências a respeito do público em geral. Como dito na seção anterior (\autoref{sec:imdb}), as bases com as quais trabalhamos, largamente conhecidas e exploradas nas literaturas da área, tem poucas imagens e ainda menos avaliações. Portanto, inferências para uma população são inviáveis a partir dessas observações --- que servem apenas para fins acadêmicos.
+
+Problemas que podem ser encontrados em estudos estatísticos são os chamados ``\emph{bias}'', que podem ser inseridos no estudo a partir da amostragem indevida da população para participação nos testes~\cite{boslaugh2008}, ainda na fase de design de tais testes. Esse tipo de consideração deve ser feita sobre as imagens que analisamos, já que estudos demonstram que ``experts'' na área de qualidade visual tentem a ser mais criteriosos em suas avaliações de qualidade; principalmente por já saberem o que procurar, no que tange erros e distribuição espacial destes. Apesar de a Toyama alegar que seus sujeitos são não-peritos, ela também alega que são estudantes de nível superior, e que, portanto, não representam bem a população de possíveis consumidores de imagens, que podem ter não só níveis diversos de educação formal como também podem ter qualquer idade.
+
+A LIVE alega promover uma pequena sessão de treinamento antes da sessão de avaliação, mas não dá características dessas sessões. Veremos a seguir, como a forma de se colocar uma pergunta pode influenciar na resposta obtida e, portanto, questionar essa sessão prévia de treinamento é completamente válido.
+
+Por conta dessa grande diversidade de fatores que influenciam a avaliação de qualidade de uma imagem e a validade estatística dos resultados, foram criados padrões de teste, que foram normatizados pelo ITU. Alguns exemplos são:
+
+\begin{description}
+	\item{As referências que eu tenho são todas sobre video.} Quais posso encontrar sobre imagens? Deveria consultar os padrões?
+\end{description}
+
+O método de avaliação subjetiva ainda é o \emph{benchmark} contra o qual todos os métodos objetivos são comparados. Em nosso estudo, seguindo as tendências da área, apresentamos gráficos \textbf{métrica vs. MOS}.
+
+Por conta dessa característica humana, esse tipo de avaliação é intrinsecamente estatística, e tem sido tratada como tal. A forma desse tratamento estatístico será alvo de maiores discussões nesse trabalho.
+
+A alternativa que surge aos métodos subjetivos é a confecção de algoritmos e estratégias computacionais que possam aferir e indicar a qualidade de uma imagem automaticamente. Claramente, uma imagem não tem para um sistema computacional o mesmo significado que tem para humanos. Nós tendemos a avaliar conteúdo e estrutura, reconhecer uma paisagem ou uma pessoa. Existem informações semânticas em imagens que fazem sentido apenas para humanos. Dessa forma, devemos buscar formas que um computador possa aferir a diferença entre duas imagens, ou buscar estrutura nelas.
+
+As estratégias para extração de conteúdo de uma imagem podem ser distribuídas em três grupos:
+
+\begin{description}
+	\item{avaliação baseada em pixels:}
+		Os métodos de extração de informação desse grupo advém principalmente de outras áreas de processamento de sinais e são razoavelmente bem conhecidas nas engenharias como um todo: MSE (\emph{Mean Square Error}, Erro Quadrático Médio) e PSNR (\emph{Peak Signal-to-Noise Ratio}, Razão de Pico Sinal-Ruído). Dentro da área de avaliação de qualidade visual, foi desenvolvida uma outra métrica em anos recentes, a MSSIM (\emph{Mean Structural Similarity Index}, Média de Índice de Similaridade Estrutural), que ganhou relevante destaque em publicações da área, apesar de sua eficiência controversa.
+\end{description}
+Com aferir a qualidade de uma imagem? O assunto é extenso e complexo e passa por definir o que é, de fato, qualidade. Vários fatores influenciam na avaliação da qualidade por humanos, como já dito. Uma pessoa que tenha uma conexão emocional com uma paisagem tende a atribuir maior qualidade a uma imagem que contenha a paisagem em questão. Trilhas sonoras e sincronização de áudio (especialmente no caso de fala e sincronização labial) tendem a influenciar a avaliação de qualidade de um trecho de vídeo \cite{Winkler-2005-Wiley}. Avaliações humanas são intrínsecamente estatísticas e uma boa indicação de qualidade subjetiva é a MOS (\emph{Mean Opinion Score}, inglês para ``Pontuação Média de Opinião'').
+
+Além da avaliação humana, existem esforços para a criação de sistemas de avaliação objetiva de imagens,Existem avaliações subjetivas e objetivas. Avaliações subjetivas são feitas apresentando imagens a humanos, que as avaliam em qualidade. Muitos fatores influenciam nessa avaliação subjetiva de imagens ou vídeo, um exemplo interessante é a influência da trilha sonora na percepção de qualidade de vídeo \cite{Winkler-2005-Wiley}. Avaliações objetivas são feitas a partir de sistemas computadorizados, algoritmos criados para esse fim. Infelizmente, a avaliação objetiva ainda está muito aquém do desejado~\cite{wang-bovik2006}. , a qualidade de imagens pode ser aferida objetiva e subjetivamente. Aferições subjetivas de qualidade são feitas segundo estratégias bem definidas
+
+O autor de \cite{Winkler-2005-Wiley} 
