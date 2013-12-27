@@ -203,11 +203,111 @@ A alternativa que surge aos métodos subjetivos é a confecção de algoritmos e
 
 O método de avaliação subjetiva ainda é o \emph{benchmark} contra o qual todos os métodos objetivos são comparados. Em nosso estudo, seguindo as tendências da área, apresentamos gráficos que trarão os valores de métrica nas abscissas e valores de MOS nas ordenadas.
 
-As estratégias para extração de conteúdo de uma imagem podem ser distribuídas em três grupos:
+As estratégias para extração de conteúdo de uma imagem podem ser distribuídas em três grupos~\cite{Winkler-2005-Wiley}:
 
 \begin{description}
-	\item{avaliação baseada em pixels:}
+	\item{\textbf{Avaliação Baseada em Pixels:}}
 		Os métodos de extração de informação desse grupo advém principalmente de outras áreas de processamento de sinais e são razoavelmente bem conhecidas nas engenharias como um todo: MSE (\emph{Mean Square Error}, Erro Quadrático Médio) e PSNR (\emph{Peak Signal-to-Noise Ratio}, Razão de Pico Sinal-Ruído). Dentro da área de avaliação de qualidade visual, foi desenvolvida uma outra métrica em anos recentes, a MSSIM (\emph{Mean Structural Similarity Index}, Média de Índice de Similaridade Estrutural), que ganhou relevante destaque em publicações da área, apesar de sua eficiência controversa.
-	\item{avaliação baseada em }
-
+	\item{\textbf{Avaliação Baseada em um Canal:}}
+		Foi o primeiro modelo baseado em visão humana adotado e interpretava o sistema visual humano com um filtro espacial, cujas características são definidas pela função de sensibilidade a contraste (\emph{contrast sensitivity function}, CSF). Sua saída é uma versão filtrada do estímulo original e a detecção depende da definição de um limite.
+	\item{\textbf{Avaliação Baseada em Múltiplos Canais:}}
+		Modelos desse tipo assumem que cada banda das frequências espaciais é tratada por um canal diferente. Aqui, a CSF funciona como um envelope para as sensibilidades desses canais. A detecção ocorre independentemente em cada canal e também depende da definição de um limite para cada canal.
 \end{description}
+
+Esse trabalho se concentra nas avaliações baseadas em pixel, as quais passamos a explicar com mais detalhes. Mais especificamente, trabalhamos com as três métricas mencionadas, a MSE, a PSNR e a MSSIM, cada uma será detalhada nas sub-seções seguintes.
+
+\subsubsection{A MSE}
+A MSE é definida como:
+
+\begin{equation}
+	MSE = \frac{1}{n}\sum^{n}_{i=1}(\hat{X}_i - X_i)^2
+\end{equation}
+
+Onde $n$ é o número total de pixels da imagem $X$ (imagem de referência) e  $\hat{X}$ é a matriz de pixels que compõem a imagem distorcida. O índice $i$ indica a ordem em que os $n$ pixels serão avaliados.
+
+Essa métrica traduz as distorções em um único número e tem sido bastante criticada por sua inadequação ao traduzir diferentes distorções num mesmo valor de erro resultante~\cite{leaveItBovik}. Um exemplo de diversas distorções com valores similares de MSE pode ser visto na \autoref{fig:EinsteinMSE}.
+
+\begin{figure}[htb]
+	\centering
+	\begin{minipage}{.8\textwidth}
+		\caption{Discrepâncias da MSE}\label{fig:EinsteinMSE}
+		\centerline{\includegraphics[width=\textwidth]{../img/EinsteinMSE.pdf}}
+		\legend{(a) é a imagem de referência, de (b) a (j) são aplicados diferentes tipos de distorção. Note que entre (b) e (g) o valor de MSE é próximo, apesar de as distorções e qualidades percebidas serem bastante diferentes. Já de (h) a (j) a MSE tem valores elevados, mas a qualidade da imagem não é tão fortemente afetada. Fonte:~\cite[p.06]{wang-bovik2006}}
+	\end{minipage}
+\end{figure}
+
+\subsubsection{A PSNR}
+
+A PSNR é definida em função da MSE como apresentado na \autoref{eq:psnr}. Onde $M$ é o valor máximo que um pixel pode assumir (em imagens de $8 bits$, $M=255$, por exemplo).
+
+\begin{equation}\label{eq:psnr}
+	PSNR = 10log\frac{M^2}{MSE}
+\end{equation}
+
+Enquanto a MSE é uma medida de erro, a PSNR é uma medida de fidelidade, ou seja, o quanto uma imagem é semelhante a uma original. O fato de essas duas métricas serem muito fáceis e rápidas de serem calculadas, aliado ao fato de que minimizar a MSE é equivalente a otimização por quadrados mínimos, fazem dessas duas métricas ferramentas muito populares.
+
+\subsubsection{A MSSIM}
+
+MSSIM significa \emph{Mean Structural Similarity Index} (Média do Índice de Similaridade Estrutural, livremente traduzido). Essa métrica foi proposta por Wang \emph{et al.} em 2004~\cite{mssim2004} e é descrita como apresentado na \autoref{eq:mssim}.
+
+Os autores indicam que a métrica funciona em três níveis: luminância, contraste e estrutura. A imagem de referência e a imagem distorcida são comparadas nesses três níveis e, para que tal comparação seja efetuada, é necessário que se identifique, nas imagens, cada um deles.
+
+A \autoref*{eq:lum} indica como é feito o cálculo da luminância para uma imagem $x$ com $N$ pixels avaliados separadamente ($i$).
+
+\begin{equation}\label{eq:lum}
+	\mu_x = \frac{1}{N}\sum^{N}_{i=1}x_i
+\end{equation}
+
+Após estabelecida a luminância, a função de comparação de luminância $l(x,y)$ passa a ser função de $\mu_x$ e $\mu_y$ e é definida como apresentado na \autoref*{eq:compLum}, onde $C_1$ é uma constante (criada a partir de características da imagem) adicionada para contornar o caso em que o denominador torna-se muito próximo de zero, o que levaria a comparação ao infinito.
+
+\begin{equation}\label{eq:compLum}
+	l(x,y) = \frac{(2\mu_x\mu_y + C_1)}{\mu^{2}_{x} + \mu^{2}_{y} + C_1}
+\end{equation}
+
+Os autores utilizam o desvio padrão como estimativa do contraste de uma imagem, que em sua forma discreta é apresentado como na \autoref*{eq:contrast}
+
+\begin{equation}\label{eq:contrast}
+	\sigma_x = \left(\frac{1}{N-1}\sum^{N}_{i=1}(x_i - \mu_x^2) \right)^\frac{1}{2}
+\end{equation}
+
+Estabelecidos os valores de contraste para $x$ e $y$, tem-se que a função de comparação de contraste $c(x,y)$ passa a ser função de $\sigma_x$ e $\sigma_y$. Essa função pode ser vista na \autoref*{eq:compContr}. Onde, mais uma vez, uma constante ($C_2$) é adicionada para estabilidade, e também deriva de características das imagens em questão.
+
+\begin{equation}\label{eq:compContr}
+	c(x,y) = \frac{2\sigma_x\sigma_y + C_2}{\sigma^{2}_x + \sigma^2_y + C_2}
+\end{equation}
+
+
+Por último, a estrutura é definida em função do desvio padrão normalizado entre $x$ e $y$, e é apresentada na \autoref*{eq:struct}
+
+\begin{equation}\label{eq:struct}
+	s(x,y) = \frac{\sigma_{xy} + C_3}{\sigma_x \sigma_y + C_3}
+\end{equation}
+
+Com $\sigma_{xy}$ definido como na \autoref*{eq:varxy}, onde o índice $i$ indica o pixel sob avaliação, de um total de $N$ pixels.
+
+\begin{equation}\label{eq:varxy}
+	\sigma_{xy} = \frac{1}{N-1}\sum^{N}_{i=1}(x_i - \mu_x)(y_i - \mu_y)
+\end{equation}
+
+Enfim, relacionando as três funções de comparação, temos a relação de comparação da \autoref*{eq:qssim}, com $\alpha, \beta, \gamma > 0$ e modificados de acordo com a relevância de cada característica.
+
+\begin{equation}\label{eq:qssim}
+	SSIM(x,y) = [l(x,y)]^{\alpha} \cdot [c(x,y)]^{\beta} \cdot [s(x,y)]^{\gamma}
+\end{equation}
+
+A equação resulta, portanto, na \autoref*{eq:ssim}
+
+\begin{equation}\label{eq:ssim}
+	SSIM = \frac{(2\mu_x\mu_y + C_1)(2\sigma_{xy} + C_2)}{(\mu^{2}_{x} + \mu^{2}_{y} + C_1)(\sigma^{2}_{x} + \sigma^{2}_{y} + C_2)}
+\end{equation}
+
+O uso da SSIM, e o cálculo de todas as médias e desvios descritos até aqui se faz sobre uma janela de $8\times8$ pixels, que se move, pixel a pixel, sobre toda a imagem; a cada passo, as estatísticas são calculadas para cada janela. Finalmente, a MSSIM é descrita como
+
+\begin{equation}\label{eq:mssim}
+	MSSIM(X,Y) = \frac{1}{M}\sum^{M}_{j=1}SSIM(x_j,y_j)
+\end{equation}
+
+onde $X$ e $Y$ são as imagens de referência e a distorcida, respectivamente; e os conteúdo da imagem correspondente a j-ésima janela é indicado por $x_j$ e $y_j$.
+
+Nas seções seguintes, descreveremos como tratamos os dados, os resultados obtidos em ambas as formas de tratamento estatístico (contínuo e por classes) e os resultados obtidos.
+
